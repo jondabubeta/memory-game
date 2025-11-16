@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7a225f0a.css",
+    "main.js": "/static/js/main.cdee2217.js",
+    "static/media/Quantico-Regular.ttf": "/static/media/Quantico-Regular.3faac7b366ab13616d56.ttf",
+    "static/media/Quantico-Bold.ttf": "/static/media/Quantico-Bold.336fa8a6ceaeb6ab98a8.ttf",
+    "index.html": "/index.html",
+    "main.7a225f0a.css.map": "/static/css/main.7a225f0a.css.map",
+    "main.cdee2217.js.map": "/static/js/main.cdee2217.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7a225f0a.css",
+    "static/js/main.cdee2217.js"
+  ]
+}

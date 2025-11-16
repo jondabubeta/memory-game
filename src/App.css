@@ -8,6 +8,17 @@ font-family: 'Quantico-Bold';
 src: local('Quantico-Bold'), url(./fonts/Quantico-Bold.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: 'Quattrocento-Regular';
+  src: local('Quattrocento-Regular'), url(./fonts/Quattrocento-Regular.ttf) format('truetype');
+}
+
+@font-face {
+font-family: 'Quattrocento-Bold';
+src: local('Quattrocento-Bold'), url(./fonts/Quattrocento-Bold.ttf) format('truetype');
+}
+
+/* Default Blizzard Theme */
 .App {
   background-color: #0C154F;
   max-width: 1920px;
@@ -16,38 +27,32 @@ src: local('Quantico-Bold'), url(./fonts/Quantico-Bold.ttf) format('truetype');
   margin: auto;
 }
 
-h1 {
+.App h1 {
   font-family: 'Quantico-Regular', serif;
   font-size: 5vh;
   color: #7C9AFE;
 }
 
-img.game-logo {
-  max-width: 70%;
-  max-height: 70%;
-  margin-top: 3.5em;
-}
-
-h2 {
+.App h2 {
   font-family: 'Quantico-Regular', serif;
   color: #7C9AFE;
   font-size: 4vh;
 }
 
-h3 {
+.App h3 {
   font-family: 'Quantico-Regular', serif;
   font-size: 3vh;
   color: #7C9AFE;
   margin-top: 2.5em;
 }
 
-h4 {
+.App h4 {
   font-family: 'Quantico-Regular', serif;
   font-size: 2.5vh;
   color: #FFF;
 }
 
-button {
+.App button {
   font-family: 'Quantico-Regular', serif;
   background: none;
   border: 2px solid #FFF;
@@ -62,12 +67,12 @@ button {
   height: 53px;
 }
 
-button:hover {
+.App button:hover {
   background: #0C154F;
   color: #fff;
 }
 
-.card-grid {
+.App .card-grid {
   padding-top: 4em;
   margin: auto;
   max-width: 90vh;
@@ -78,10 +83,64 @@ button:hover {
   grid-gap: 15px;
 }
 
-.game-info {
+.App .game-info {
   width: 380px;
   height: 937px;
   text-align: center;
   background-color: #2E3C99;
   float: left;
+}
+
+/* LoL Theme */
+.App[data-theme="lol"] {
+  background-color: #001e28;
+}
+
+.App[data-theme="lol"] h1 {
+  font-family: 'Quattrocento-Regular', serif;
+  color: #d4a33c;
+}
+
+.App[data-theme="lol"] h2 {
+  font-family: 'Quattrocento-Regular', serif;
+  color: #d4a33c;
+}
+
+.App[data-theme="lol"] h3 {
+  font-family: 'Quattrocento-Regular', serif;
+  color: #d4a33c;
+  margin-top: 3em;
+}
+
+.App[data-theme="lol"] h4 {
+  font-family: 'Quattrocento-Regular', serif;
+}
+
+.App[data-theme="lol"] button {
+  font-family: 'Quattrocento-Regular', serif;
+  border: 2px solid #003d51;
+  color: #003d51;
+}
+
+.App[data-theme="lol"] button:hover {
+  background: #003d51;
+  color: #fff;
+}
+
+.App[data-theme="lol"] .card-grid {
+  background-color: #001e28;
+}
+
+.App[data-theme="lol"] .game-info {
+  background-color: #00141b;
+}
+
+img.game-logo {
+  max-width: 70%;
+  max-height: 70%;
+  margin-top: 3.5em;
+}
+
+.theme-toggle {
+  margin-top: 20px;
 }

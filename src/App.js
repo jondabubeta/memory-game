@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import React from 'react';
 import './App.css'
 import SingleCard from './components/SingleCard'
+import { themes } from './themes'
 
 function App() {
   const [cards, setCards] = useState([])
@@ -12,39 +13,13 @@ function App() {
   const [disabled, setDisabled] = useState(false)
   const [timer, setTimer] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [currentTheme, setCurrentTheme] = useState('blizz')
   const increment = useRef(null)
 
+  const theme = themes[currentTheme]
 
   const cardsSetup = () =>{
-    const cardImg = [
-      { "src": "/CardImg/Auriel.png"  },
-      { "src": "/CardImg/Blaze.png"  },
-      { "src": "/CardImg/Cassia.png" },
-      { "src": "/CardImg/DVA.png"  },
-      { "src": "/CardImg/E.T.C_.png"  },
-      { "src": "/CardImg/Falstad.png"  },
-      { "src": "/CardImg/Genji.png"  },
-      { "src": "/CardImg/Hanzo.png"  },
-      { "src": "/CardImg/Illidan.png"  },
-      { "src": "/CardImg/Johanna.png"  },
-      { "src": "/CardImg/Kerrigan.png"  },
-      { "src": "/CardImg/LtMorales.png"  },
-      { "src": "/CardImg/Mercy.png"  },
-      { "src": "/CardImg/Nova.png"  },
-      { "src": "/CardImg/Orphea.png"  },
-      { "src": "/CardImg/Probius.png"  },
-      { "src": "/CardImg/Qhira.png"  },
-      { "src": "/CardImg/Raynor.png"  },
-      { "src": "/CardImg/Sylvanas.png"  },
-      { "src": "/CardImg/Tyrande.png"  },
-      { "src": "/CardImg/Uther.png"  },
-      { "src": "/CardImg/Valla.png"  },
-      { "src": "/CardImg/Widowmaker.png"  },
-      { "src": "/CardImg/Xavius.png"  },
-      { "src": "/CardImg/Yrel.png"  },
-      { "src": "/CardImg/Zenyatta.png"  }
-    ]
-    return cardImg
+    return theme.cardImages
   } 
 
   // shuffle cards for new game
@@ -74,6 +49,10 @@ function App() {
 
   // handle a choice
   const handleChoice = (card) => {
+    // Prevent selecting the same card twice
+    if (choiceOne && choiceOne.id === card.id) {
+      return
+    }
     return choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
   }
 
@@ -102,7 +81,7 @@ function App() {
       }
 
     }
-  }, [choiceOne, choiceTwo])
+  }, [choiceOne, choiceTwo, pairs])
 
   // Reset the choice and increment turns
   const resetTurn = () => {
@@ -138,14 +117,20 @@ function App() {
 
   // Start New Game Automatically
   useEffect(() => {
-    document.title = "LoL Memory Game"
+    document.title = theme.title
     shuffleCards()
     handleReset()
     handleStart()
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTheme])
+
+  const toggleTheme = () => {
+    const newTheme = currentTheme === 'blizz' ? 'lol' : 'blizz'
+    setCurrentTheme(newTheme)
+  }
 
   return (
-    <div className="App">
+    <div className="App" data-theme={currentTheme}>
       
       <div className="game-info">
       <img src={process.env.PUBLIC_URL + '/Blizzcard_logo.png'}  className='game-logo' alt='Blizzcard_logo.png'/>
@@ -156,6 +141,9 @@ function App() {
       <h3>TURN:</h3>
       <h4>{turns}</h4>
       <button data-testid="new-game-btn" onClick={() => {shuffleCards(); handleReset(); handleStart()}}>New Game</button>
+      <button onClick={toggleTheme} className="theme-toggle">
+        Switch to {currentTheme === 'blizz' ? 'LoL' : 'Blizzard'}
+      </button>
       </div>
       
       <div data-testid="card-grid-map" className="card-grid">
@@ -166,6 +154,7 @@ function App() {
             handleChoice={handleChoice}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
             disabled={disabled}
+            cardBack={theme.cardBack}
           />
         ))}
       </div>

@@ -6,6 +6,11 @@
     width: 110px;
     display: block;
   }
+
+  /* Theme-specific card borders */
+  .App[data-theme="lol"] .card img {
+    border: 5px solid #001828;
+  }
   
   /* front of card - the picture */
   .card .front {
