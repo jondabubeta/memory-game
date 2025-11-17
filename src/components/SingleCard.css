@@ -1,5 +1,6 @@
 .card {
     position: relative;
+    transition: margin 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
   }
   .card img {
     height: 180px;
@@ -9,7 +10,7 @@
 
   /* Theme-specific card borders */
   .App[data-theme="lol"] .card img {
-    border: 5px solid #001828;
+    border: none;
   }
   
   /* front of card - the picture */

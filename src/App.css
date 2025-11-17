@@ -80,7 +80,8 @@ src: local('Quattrocento-Bold'), url(./fonts/Quattrocento-Bold.ttf) format('true
   background-color: #0C154F;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 15px;
+  gap: 15px;
+  transition: gap 0.3s cubic-bezier(0.4,0,0.2,1), background-color 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
 .App .game-info {
@@ -129,6 +130,7 @@ src: local('Quattrocento-Bold'), url(./fonts/Quattrocento-Bold.ttf) format('true
 
 .App[data-theme="lol"] .card-grid {
   background-color: #001e28;
+  gap: 15px;
 }
 
 .App[data-theme="lol"] .game-info {
@@ -142,5 +144,9 @@ img.game-logo {
 }
 
 .theme-toggle {
-  margin-top: 20px;
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 1000;
+  margin-top: 0;
 }

@@ -115,12 +115,27 @@ function App() {
     return `${getHours} : ${getMinutes} : ${getSeconds}`
   }
 
-  // Start New Game Automatically
+  // On theme change, update document title and card images, but preserve game state
   useEffect(() => {
     document.title = theme.title
-    shuffleCards()
-    handleReset()
-    handleStart()
+    // If there are cards, update their src to the new theme's images, preserving matched and id
+    if (cards.length > 0) {
+      // Get new theme's card images (first 9 unique)
+      const newImages = theme.cardImages.slice(0, 9)
+      // Build a mapping from old src to new src by index
+      const oldTheme = currentTheme === 'lol' ? 'blizz' : 'lol'
+      const oldImages = themes[oldTheme].cardImages.slice(0, 9)
+      // Map old src to new src by index
+      const srcMap = {}
+      for (let i = 0; i < oldImages.length; i++) {
+        srcMap[oldImages[i].src] = newImages[i].src
+      }
+      // Update cards array
+      setCards(prevCards => prevCards.map(card => ({
+        ...card,
+        src: srcMap[card.src] || card.src // fallback to current src if not found
+      })))
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTheme])
 
@@ -131,21 +146,19 @@ function App() {
 
   return (
     <div className="App" data-theme={currentTheme}>
-      
-      <div className="game-info">
-      <img src={process.env.PUBLIC_URL + '/Blizzcard_logo.png'}  className='game-logo' alt='Blizzcard_logo.png'/>
-      <h3>PAIRS:</h3>
-      <h4>{pairs}/9</h4>
-      <h3>TIMER: </h3>
-      <h4>{formatTime()}</h4>
-      <h3>TURN:</h3>
-      <h4>{turns}</h4>
-      <button data-testid="new-game-btn" onClick={() => {shuffleCards(); handleReset(); handleStart()}}>New Game</button>
       <button onClick={toggleTheme} className="theme-toggle">
         Switch to {currentTheme === 'blizz' ? 'LoL' : 'Blizzard'}
       </button>
+      <div className="game-info">
+        <img src={process.env.PUBLIC_URL + '/Blizzcard_logo.png'}  className='game-logo' alt='Blizzcard_logo.png'/>
+        <h3>PAIRS:</h3>
+        <h4>{pairs}/9</h4>
+        <h3>TIMER: </h3>
+        <h4>{formatTime()}</h4>
+        <h3>TURN:</h3>
+        <h4>{turns}</h4>
+        <button data-testid="new-game-btn" onClick={() => {shuffleCards(); handleReset(); handleStart()}}>New Game</button>
       </div>
-      
       <div data-testid="card-grid-map" className="card-grid">
         {cards.map(card => (
           <SingleCard 
