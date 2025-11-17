@@ -1,12 +1,12 @@
-import './SingleCard.css'
+import React from 'react';
+import './SingleCard.css';
 
-export default function SingleCard({ card, handleChoice, flipped, disabled, cardBack }) {
-
+const SingleCard = ({ card, handleChoice, flipped, disabled, cardBack }) => {
   const handleClick = () => {
     if (!disabled) {
-      handleChoice(card)
+      handleChoice(card);
     }
-  }
+  };
 
   return (
     <div data-testid="single-card" className="card">
@@ -15,5 +15,7 @@ export default function SingleCard({ card, handleChoice, flipped, disabled, card
         <img className="back" src={cardBack} onClick={handleClick} alt="cover" />
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default React.memo(SingleCard);
