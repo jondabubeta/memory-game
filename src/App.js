@@ -135,6 +135,9 @@ function App() {
         ...card,
         src: srcMap[card.src] || card.src // fallback to current src if not found
       })))
+      // Reset selected cards so UI and logic are in sync
+      setChoiceOne(null)
+      setChoiceTwo(null)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTheme])
