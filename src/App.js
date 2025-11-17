@@ -130,14 +130,23 @@ function App() {
       for (let i = 0; i < oldImages.length; i++) {
         srcMap[oldImages[i].src] = newImages[i].src
       }
-      // Update cards array
-      setCards(prevCards => prevCards.map(card => ({
-        ...card,
-        src: srcMap[card.src] || card.src // fallback to current src if not found
-      })))
-      // Reset selected cards so UI and logic are in sync
-      setChoiceOne(null)
-      setChoiceTwo(null)
+      // Update cards array and preserve open state
+      setCards(prevCards => {
+        const updatedCards = prevCards.map(card => ({
+          ...card,
+          src: srcMap[card.src] || card.src // fallback to current src if not found
+        }));
+        // Update choiceOne and choiceTwo to reference the new card objects
+        if (choiceOne) {
+          const newChoiceOne = updatedCards.find(card => card.id === choiceOne.id);
+          setChoiceOne(newChoiceOne || null);
+        }
+        if (choiceTwo) {
+          const newChoiceTwo = updatedCards.find(card => card.id === choiceTwo.id);
+          setChoiceTwo(newChoiceTwo || null);
+        }
+        return updatedCards;
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTheme])
