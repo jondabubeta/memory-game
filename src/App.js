@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css'
 import SingleCard from './components/SingleCard'
 import { themes } from './themes'
+import { shuffleArray, createShuffledDeck } from './utils'
 
 function App() {
   const [cards, setCards] = useState([])
@@ -18,33 +19,14 @@ function App() {
 
   const theme = themes[currentTheme]
 
-  const cardsSetup = () =>{
-    return theme.cardImages
-  } 
-
   // shuffle cards for new game
   const shuffleCards = () => {
-    const deckCards = pickCards()
-    const shuffledCards = shuffleDeck(deckCards)
-    setChoiceOne(null)
-    setChoiceTwo(null)
-    setCards(shuffledCards)
-    setPairs(0)
-    setTurns(0)
-  }
-
-  const pickCards = () => {
-    const deckCards = cardsSetup()
-    .sort(() => Math.random() - 0.5)
-    return deckCards
-  }
-
-  const shuffleDeck = (deckCards) =>{
-    const shuffledCards = [...deckCards.slice(0, 9), ...deckCards.slice(0, 9)]
-    .sort(() => Math.random() - 0.5)
-    .map((card) => ({ ...card, id: Math.random() }))
-
-    return shuffledCards
+    const shuffledCards = createShuffledDeck(theme.cardImages);
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setCards(shuffledCards);
+    setPairs(0);
+    setTurns(0);
   }
 
   // handle a choice
