@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import React from 'react';
 import './App.css'
 import SingleCard from './components/SingleCard'
+import LoadingSpinner from './components/LoadingSpinner'
 import { themes } from './themes'
-import { shuffleArray, createShuffledDeck } from './utils'
+import { createShuffledDeck } from './utils'
 
 function App() {
   const [cards, setCards] = useState([])
@@ -15,6 +16,8 @@ function App() {
   const [timer, setTimer] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [currentTheme, setCurrentTheme] = useState('blizz')
+  const [isLoading, setIsLoading] = useState(true)
+  const [accessibilityMode, setAccessibilityMode] = useState(false)
   const increment = useRef(null)
 
   const theme = themes[currentTheme]
@@ -52,7 +55,6 @@ function App() {
                 clearInterval(increment.current)
               }
               return {...card, matched: true, }
-            } else {
               return card
             }
           })
@@ -138,12 +140,60 @@ function App() {
     setCurrentTheme(newTheme)
   }
 
+  const toggleAccessibility = () => {
+    setAccessibilityMode(!accessibilityMode)
+  }
+
+  // Preload images on mount
+  useEffect(() => {
+    const preloadImages = async () => {
+      const allImages = [
+        ...themes.blizz.cardImages.map(card => card.src),
+        themes.blizz.cardBack,
+        ...themes.lol.cardImages.map(card => card.src),
+        themes.lol.cardBack
+      ];
+
+      const imagePromises = allImages.map(src => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = src;
+          img.onload = resolve;
+          img.onerror = resolve; // Resolve even on error to not block loading
+        });
+      });
+
+      await Promise.all(imagePromises);
+      setIsLoading(false);
+    };
+
+    preloadImages();
+  }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div className="App" data-theme={currentTheme}>
-      <button onClick={toggleTheme} className="theme-toggle">
-        Switch to {currentTheme === 'blizz' ? 'LoL' : 'Blizzard'}
-      </button>
-      <div className="game-info">
+      <div className="top-controls">
+        <button 
+          onClick={toggleTheme} 
+          className={`theme-toggle ${accessibilityMode ? 'accessible' : ''}`}
+          aria-label={`Switch to ${currentTheme === 'blizz' ? 'League of Legends' : 'Blizzard'} theme`}
+        >
+          {currentTheme === 'blizz' ? 'LoL' : 'Blizzard'}
+        </button>
+        <button 
+          onClick={toggleAccessibility} 
+          className={`accessibility-toggle ${accessibilityMode ? 'accessible' : ''}`}
+          aria-label={`Turn ${accessibilityMode ? 'off' : 'on'} accessibility mode`}
+          aria-pressed={accessibilityMode}
+        >
+          A11y {accessibilityMode ? 'ON' : 'OFF'}
+        </button>
+      </div>
+      <div className="game-info" role="complementary" aria-label="Game statistics">
         <img src={process.env.PUBLIC_URL + '/Blizzcard_logo.png'}  className='game-logo' alt='Blizzcard_logo.png'/>
         <h3>PAIRS:</h3>
         <h4>{pairs}/9</h4>
@@ -151,9 +201,21 @@ function App() {
         <h4>{formatTime()}</h4>
         <h3>TURN:</h3>
         <h4>{turns}</h4>
-        <button data-testid="new-game-btn" onClick={() => {shuffleCards(); handleReset(); handleStart()}}>New Game</button>
+        <button 
+          data-testid="new-game-btn" 
+          onClick={() => {shuffleCards(); handleReset(); handleStart()}}
+          aria-label="Start a new game"
+          className={accessibilityMode ? 'accessible' : ''}
+        >
+          New Game
+        </button>
       </div>
-      <div data-testid="card-grid-map" className="card-grid">
+      <div 
+        data-testid="card-grid-map" 
+        className="card-grid"
+        role="grid"
+        aria-label="Memory card grid"
+      >
         {cards.map(card => (
           <SingleCard 
             key={card.id}
@@ -162,6 +224,7 @@ function App() {
             flipped={card === choiceOne || card === choiceTwo || card.matched}
             disabled={disabled}
             cardBack={theme.cardBack}
+            accessibilityMode={accessibilityMode}
           />
         ))}
       </div>

@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.2f2288ad.css",
-    "main.js": "/static/js/main.96b9514c.js",
+    "main.css": "/static/css/main.bf6fb97f.css",
+    "main.js": "/static/js/main.bf8cafd6.js",
     "static/media/Quattrocento-Bold.ttf": "/static/media/Quattrocento-Bold.ed26827e1ecdb8a9bf3e.ttf",
     "static/media/Quattrocento-Regular.ttf": "/static/media/Quattrocento-Regular.3d1b0443d0ee295dc542.ttf",
     "static/media/Quantico-Regular.ttf": "/static/media/Quantico-Regular.3faac7b366ab13616d56.ttf",
     "static/media/Quantico-Bold.ttf": "/static/media/Quantico-Bold.336fa8a6ceaeb6ab98a8.ttf",
     "index.html": "/index.html",
-    "main.2f2288ad.css.map": "/static/css/main.2f2288ad.css.map",
-    "main.96b9514c.js.map": "/static/js/main.96b9514c.js.map"
+    "main.bf6fb97f.css.map": "/static/css/main.bf6fb97f.css.map",
+    "main.bf8cafd6.js.map": "/static/js/main.bf8cafd6.js.map"
   },
   "entrypoints": [
-    "static/css/main.2f2288ad.css",
-    "static/js/main.96b9514c.js"
+    "static/css/main.bf6fb97f.css",
+    "static/js/main.bf8cafd6.js"
   ]
 }

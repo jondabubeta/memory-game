@@ -25,9 +25,41 @@
   }
   
   /* back of card - cover */
+  .card .back-wrapper {
+    cursor: pointer;
+    outline: none;
+    position: relative;
+  }
+  
+  .card .back-wrapper:focus {
+    outline: none;
+  }
+  
+  .card .back-wrapper[tabindex="0"] {
+    outline: 3px solid #1E90FF;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  
+  .card .back-wrapper[tabindex="0"]:focus {
+    outline: 4px solid #FFD700;
+    outline-offset: 3px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  }
+  
+  .App[data-theme="lol"] .card .back-wrapper[tabindex="0"] {
+    outline-color: #1E90FF;
+  }
+  
+  .App[data-theme="lol"] .card .back-wrapper[tabindex="0"]:focus {
+    outline: 4px solid #FFD700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  }
+  
   .card .back {
     transition: all ease-in 0.2s;
     transition-delay: 0.2s;
+    pointer-events: none;
   }
   .flipped .back {
     transform: rotateY(90deg);
