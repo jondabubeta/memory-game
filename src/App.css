@@ -92,15 +92,20 @@ src: local('Quattrocento-Bold'), url(./fonts/Quattrocento-Bold.ttf) format('true
 
 .App .card-grid {
   padding-top: 4em;
+  padding-bottom: 2em;
   margin: auto;
-  max-width: 90vh;
-  max-height: 90vh;
+  width: fit-content;
+  max-width: 90%;
+  height: 100%;
   background-color: #0C154F;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 15px;
+  grid-template-columns: repeat(6, auto);
+  row-gap: 1.5vw;
+  column-gap: 1vw;
   transition: gap 0.3s cubic-bezier(0.4,0,0.2,1), background-color 0.3s cubic-bezier(0.4,0,0.2,1);
   flex: 1;
+  align-content: center;
+  justify-content: center;
 }
 
 .App .game-info {
@@ -165,7 +170,6 @@ src: local('Quattrocento-Bold'), url(./fonts/Quattrocento-Bold.ttf) format('true
 
 .App[data-theme="lol"] .card-grid {
   background-color: #001e28;
-  gap: 15px;
 }
 
 .App[data-theme="lol"] .game-info {
@@ -184,7 +188,7 @@ img.game-logo {
   right: 40px;
   z-index: 1000;
   display: flex;
-  gap: 10px;
+  gap: 15px;
 }
 
 .theme-toggle,
@@ -244,6 +248,19 @@ img.game-logo {
 }
 
 /* Responsive Design */
+@media (min-width: 1200px) {
+  .card img {
+    max-height: 100vh !important;
+    min-height: 650px;
+  }
+  
+  .App .card-grid {
+    row-gap: 3.5vw;
+    column-gap: 3vw;
+    max-width: 98%;
+  }
+}
+
 @media (max-width: 1200px) {
   .App .game-info {
     width: 300px;
@@ -311,8 +328,7 @@ img.game-logo {
   }
   
   .card img {
-    height: 140px;
-    width: 85px;
+    max-height: 18vh;
   }
   
   .App h3 {
@@ -332,8 +348,7 @@ img.game-logo {
   }
   
   .card img {
-    height: 110px;
-    width: 68px;
+    max-height: 15vh;
   }
   
   .App button {

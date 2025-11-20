@@ -19,7 +19,7 @@ const SingleCard = ({ card, handleChoice, flipped = false, disabled, cardBack, a
   return (
     <div 
       data-testid="single-card" 
-      className="card"
+      className={`card ${accessibilityMode && !card.matched ? 'accessible' : ''}`}
       role="gridcell"
     >
       <div className={flipped ? "flipped" : ""}>
@@ -27,11 +27,12 @@ const SingleCard = ({ card, handleChoice, flipped = false, disabled, cardBack, a
         <div
           className="back-wrapper"
           role="button"
-          tabIndex={accessibilityMode && !disabled ? 0 : -1}
+          tabIndex={accessibilityMode && !flipped ? 0 : -1}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
           aria-label={accessibilityMode ? (flipped ? "Card revealed" : "Click to reveal card") : undefined}
           aria-pressed={accessibilityMode ? flipped : undefined}
+          aria-disabled={disabled}
         >
           <img className="back" src={cardBack} alt="" aria-hidden="true" />
         </div>
