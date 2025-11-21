@@ -215,7 +215,7 @@ function App() {
         </button>
       </div>
       <div className="game-info" role="complementary" aria-label="Game statistics">
-        <img src={process.env.PUBLIC_URL + '/Blizzcard_logo.png'}  className='game-logo' alt='Blizzcard_logo.png'/>
+        <img src={process.env.PUBLIC_URL + '/logo.svg'}  className='game-logo' alt='logo.svg'/>
         <h3>PAIRS:</h3>
         <h4>{pairs}/9</h4>
         <h3>TIMER: </h3>
